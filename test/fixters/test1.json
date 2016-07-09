@@ -1,6 +1,7 @@
 {
   "action": "bet_request",
-  "expected": 0,
+  "expected": 1590,
+  "skipped": true,
   "description": "should fold? if K spades and 6 hearts",
   "game_state": {
 

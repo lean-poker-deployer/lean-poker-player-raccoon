@@ -29,10 +29,15 @@ module.exports = {
     var hand_rang = startHandRanger(ourbot.hole_cards);
     var stack_size = ourbot.stack/max_opponent_stack;
 
+    if(game_state.community_cards.length) {
+      bet(ourbot.stack);
+    }
+
     if (foldOrAllIn(players, hand_rang, ourbot.stack, max_opponent_stack, game_state.small_blind) === 'fold') {
       bet(0);
     } else {
-      bet(ourbot.stack);
+      var minRaise = game_state.current_buy_in - ourbot.bet + game_state.minimum_raise;
+      bet(Math.min(ourbot.stack, minRaise * 3));
     }
 
   },
