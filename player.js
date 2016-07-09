@@ -2,8 +2,8 @@ var handResolver = require('./handResolver');
 var action = require('./action');
 
 module.exports = {
-
-  VERSION: "Testing JavaScript folding player",
+  var pjson = require('./package.json');
+  VERSION: pjson.version,
 
   bet_request: function(gameState, bet) {
     // console.error(gameState);
