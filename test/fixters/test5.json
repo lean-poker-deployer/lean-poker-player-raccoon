@@ -1,6 +1,6 @@
 {
   "action": "bet_request",
-  "expected": "0",
+  "expected": 0,
   "description": "should fold",
   "game_state": {
 

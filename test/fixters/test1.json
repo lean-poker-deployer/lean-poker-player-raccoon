@@ -1,7 +1,7 @@
 {
   "action": "bet_request",
-  "expected": "0",
-  "description": "should fold?",
+  "expected": 0,
+  "description": "should fold? if K spades and 6 hearts",
   "game_state": {
 
     "tournament_id":"550d1d68cd7bd10003000003",

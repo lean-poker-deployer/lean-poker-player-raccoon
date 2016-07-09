@@ -1,7 +1,8 @@
 {
   "action": "bet_request",
-  "expected": "480",
-  "description": "should raise",
+  "expected": 480,
+  "skipped": true,
+  "description": "should raise if A clubs and A spades",
   "game_state": {
 
     "tournament_id":"550d1d68cd7bd10003000003",

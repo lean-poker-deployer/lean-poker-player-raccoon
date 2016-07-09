@@ -26,7 +26,7 @@ function readFiles(dirname, onFileContent, onError) {
 }
 
 
-readFiles(path.resolve(__dirname, 'fixtures/') + '/', function onFileContent(filename, content) {
+readFiles(path.resolve(__dirname, 'fixters/') + '/', function onFileContent(filename, content) {
   var resultJson;
   try {
     resultJson = JSON.parse(content);
@@ -35,8 +35,11 @@ readFiles(path.resolve(__dirname, 'fixtures/') + '/', function onFileContent(fil
     console.log('cannot JSON parse');
     throw e;
   }
-  describe('Generated Tests', function () {
-
+  describe(filename, function () {
+    if (resultJson.skipped) {
+      it('is skipped');
+      return;
+    }
     it(resultJson.description, function () {
       player.bet_request(resultJson.game_state, function (bet) {
         bet.should.be.equal(resultJson.expected);
