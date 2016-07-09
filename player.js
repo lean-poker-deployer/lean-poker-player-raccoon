@@ -2,17 +2,10 @@ var handResolver = require('./handResolver');
 var action = require('./action');
 
 module.exports = {
-  var pjson = require('./package.json');
-  VERSION: pjson.version,
 
 
-<<<<<<< HEAD
-/*
->>>>>>> 9cfe95fc23a635707eb81a723fef54a120f0d5e2
-=======
-  VERSION: "Testing JavaScript folding player",
+  VERSION: "2",
 
->>>>>>> parent of 9cfe95f... Test logic
   bet_request: function(gameState, bet) {
     // console.error(gameState);
     var pot = gameState.pot;
