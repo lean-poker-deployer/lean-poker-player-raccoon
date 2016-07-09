@@ -14,16 +14,20 @@ app.get('/', function (req, res) {
   res.send(200, 'OK')
 });
 
+<<<<<<< HEAD
 app.post('/', function (req, res) {
 
   if (req.body.action == 'bet_request') {
+
     try {
       player.bet_request(JSON.parse(req.body.game_state), function (bet) {
         winston.info('Bet:', bet);
         res.send(200, bet.toString());
       });
     } catch (error) {
-      console.error(error);
+      winston.error('Catch Error', error);
+      winston.error('Bet:', bet);
+      wisnton.error('Req, res', req.body, res.body);
       bet(game_state.current_buy_in);
     }
   } else if (req.body.action == 'showdown') {
