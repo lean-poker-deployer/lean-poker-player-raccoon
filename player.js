@@ -23,7 +23,8 @@ function isBetExist(game_state) {
 
 module.exports = {
   bet_request: function (game_state, bet) {
-    winston.info('Game State:', game_state);
+
+    winston.error('Game State:', game_state);
     let players = calculateActivePlayers(game_state);
     let stack = game_state.players[game_state.in_action].stack;
     let min_save_stack = 0.8 * 1000 * players;
