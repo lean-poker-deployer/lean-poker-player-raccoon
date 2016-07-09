@@ -1,10 +1,12 @@
+'use strict';
+
 var handResolver = require('./handResolver');
 var action = require('./action');
 var startHandRanger = require('./startHand/startHand');
 
 module.exports = {
 
-  VERSION: "2",
+  VERSION: '2.0.0',
 
   bet_request: function (game_state, bet) {
 
