@@ -2,6 +2,10 @@ const express = require('express');
 const bodyParser = require("body-parser");
 
 const winston = require('winston');
+winston.add(winston.transports.Logentries, {
+           token: 'ee9aa1c8-bbec-4b59-83f4-8aec42ba69de'
+       });
+
 
 const version = require('./package.json').version;
 const player = require('./player');
@@ -14,7 +18,6 @@ app.get('/', function (req, res) {
   res.send(200, 'OK')
 });
 
-<<<<<<< HEAD
 app.post('/', function (req, res) {
 
   if (req.body.action == 'bet_request') {
@@ -25,6 +28,7 @@ app.post('/', function (req, res) {
         res.send(200, bet.toString());
       });
     } catch (error) {
+      console.error(error);
       winston.error('Catch Error', error);
       winston.error('Bet:', bet);
       wisnton.error('Req, res', req.body, res.body);
