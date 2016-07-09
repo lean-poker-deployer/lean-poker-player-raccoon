@@ -1,14 +1,11 @@
 module.exports = {
-
-  callAmount: function (current_buy_in, current_bet_of_player) {
-    if (current_buy_in === current_bet_of_player) {
-      return 0;
+  activePlayers : function(players) {
+    var count = 0, i;
+    for (i = 0; i < players.length; i++) {
+      if (players[i]['status'] == 'active') {
+        count++;
+      }
     }
-    if (current_buy_in > current_bet_of_player) {
-      return current_buy_in - current_bet_of_player;
-    } else {
-      throw new Error('current_buy_in cannot be less then current bet');
-    }
+    return count;
   }
-
 };
