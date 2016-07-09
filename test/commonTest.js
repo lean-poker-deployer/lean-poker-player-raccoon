@@ -48,4 +48,10 @@ describe('common', function () {
     playersActive.should.be.equal(2);
   });
 
+  it('should return Number', function (){
+    var averageActivePlayersStack = common.averageActivePlayersStack(players);
+    averageActivePlayersStack.should.be.Number();
+    averageActivePlayersStack.should.be.equal(1300);
+  })
+
 });

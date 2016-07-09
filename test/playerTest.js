@@ -41,21 +41,7 @@ describe('Bot', function () {
     }
 
   });
-
-
-  it('should check callAmount', function () {
-    var result;
-
-    result = common.callAmount(5, 5);
-    result.should.be.equal(0);
-
-    result = common.callAmount(320, 80);
-    result.should.be.equal(240);
-
-    should.throws(function () {
-      common.callAmount(80, 320);
-    });
-  });
+  
 
   it('should launch Artem written combination', function () {
     let hand = [
