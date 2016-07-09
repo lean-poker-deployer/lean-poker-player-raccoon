@@ -1,5 +1,5 @@
 function calculateActivePlayers(game_state) {
-  let count = 0;
+  var count = 0;
   game_state.players.forEach(function (player) {
     if (player.status === 'active') {
       count++;
@@ -21,9 +21,9 @@ function isBetExist(game_state) {
 
 module.exports = {
   bet_request: function (game_state, bet) {
-    let players = calculateActivePlayers(game_state);
-    let stack = game_state.players[game_state.in_action].stack;
-    let min_save_stack = 0.8 * 1000 * players;
+    var players = calculateActivePlayers(game_state);
+    var stack = game_state.players[game_state.in_action].stack;
+    var min_save_stack = 0.8 * 1000 * players;
 
     if (isPreFlop(game_state)) {
       //Only two playes left
