@@ -1,51 +1,36 @@
+'use strict';
+
 var handResolver = require('./handResolver');
-var combination = require('./combination'); // Artem created
 var action = require('./action');
+var startHandRanger = require('./startHand/startHand');
 
 module.exports = {
 
-  VERSION: "Testing JavaScript folding player",
+  VERSION: '2.0.0',
 
-  bet_request: function(gameState, bet) {
-    // console.error(gameState);
-    var pot = gameState.pot;
-    var ourbot = gameState.players[gameState.in_action];
-    // ourbot.hole_cards;
-    var cards = ourbot.hole_cards;
-    console.error('cards:', cards);
-    var card1 = cards[0];
-    var card2 = cards[1];
-    handResolver(cards, function (err, percent) {
-      var result;
-      if (percent < 40) {
-        result = action.fold();
+  bet_request: function (game_state, bet) {
+
+    var players = 0;
+    var max_stack = 0;
+
+    game_state.players.forEach(function (player) {
+      if (player.status === 'active') {
+        players++;
+        if(player.id != game_state.in_action) {
+          max_stack = Math.max(max_stack, player.stack + player.bet);
+        }
       }
-
-      if ((percent < 80)) {
-        result = action.call(gameState.current_buy_in, ourbot.bet);
-      }
-
-      else {
-        result = action.raise(gameState.current_buy_in, ourbot.bet, gameState.minimum_raise);
-      }
-
-      bet(result);
     });
 
-    // part of Artem logic:
-    // FIXME TypeError: Cannot read property 'length' of undefined
-    // at fill (combination.js:174:40)
-    // Artem don't handle strings as numbers.
-    // All incoming cards should be numbers. See test/playerTest.js
-    //
-    // var fillOrdered = combination(cards);
-    // console.error(fillOrdered);
+    var ourbot = game_state.players[game_state.in_action];
+    var hand_rang = startHandRanger(ourbot.hole_cards);
+    var stack_size = ourbot.stack/max_stack;
 
-
-    // Function returns 0 if we have small chances to win,
-    // minimum value required to make a call if the chances are average
-    // and minimum value required to make a raise
-    
+    if (foldOrAllIn(players, hand_rang, stack_size) === 'fold') {
+      bet(0);
+    } else {
+      bet(ourbot.stack);
+    }
 
   },
 
@@ -53,3 +38,19 @@ module.exports = {
 
   }
 };
+
+/*
+ players more - less agressive 2-7
+ cardsRang more - less agressive 1 - 100
+ stackSize less - more agressive
+ */
+function foldOrAllIn(players, hand_rang, stack_size) {
+  if(stack_size > 1 && hand_rang < 0.10 * stack_size) {
+    return 'allin';
+  }
+  if (hand_rang < 0.02) {
+    return 'allin';
+  }
+
+  return 'fold';
+}
