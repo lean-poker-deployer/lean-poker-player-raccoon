@@ -1,5 +1,4 @@
 var handResolver = require('./handResolver');
-var combination = require('./combination'); // Artem created
 var action = require('./action');
 
 module.exports = {
