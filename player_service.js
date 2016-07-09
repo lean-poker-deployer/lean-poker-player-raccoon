@@ -11,10 +11,10 @@ app.get('/', function(req, res){
 
 app.post('/', function(req, res){
   if(req.body.action == 'bet_request') {
-    let gameState;
+    var gameState;
     try {
       gameState = JSON.parse(req.body.game_state);
-      console.log('game state in parse:',gameState);
+      console.error('game state in parse:',gameState);
     } catch (e) {
       console.error(500, 'problem with parsing JSON: ' + e.message);
       gameState = req.body.game_state;
@@ -36,4 +36,4 @@ app.post('/', function(req, res){
 port = parseInt(process.env['PORT'] || 1337);
 host = "0.0.0.0";
 app.listen(port, host);
-console.log('Listening at http://' + host + ':' + port)
+console.error('Listening at http://' + host + ':' + port);

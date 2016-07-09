@@ -7,12 +7,12 @@ module.exports = {
   VERSION: "Testing JavaScript folding player",
 
   bet_request: function(gameState, bet) {
-    // console.log(gameState);
+    // console.error(gameState);
     var pot = gameState.pot;
     var ourbot = gameState.players[gameState.in_action];
     // ourbot.hole_cards;
     var cards = ourbot.hole_cards;
-    console.log('cards:', cards);
+    console.error('cards:', cards);
     var card1 = cards[0];
     var card2 = cards[1];
     handResolver(cards, function (err, percent) {
@@ -39,7 +39,7 @@ module.exports = {
     // All incoming cards should be numbers. See test/playerTest.js
     //
     // var fillOrdered = combination(cards);
-    // console.log(fillOrdered);
+    // console.error(fillOrdered);
 
 
     // Function returns 0 if we have small chances to win,
