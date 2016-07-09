@@ -1,44 +1,32 @@
-const express = require('express');
-const bodyParser = require("body-parser");
+var player = require('./player');
+var express = require('express');
+var app = express();
 
-const winston = require('winston');
-winston.add(winston.transports.Logentries, {
-           token: 'ee9aa1c8-bbec-4b59-83f4-8aec42ba69de'
-       });
+app.use(express.json());
+app.use(express.urlencoded());
 
-
-const version = require('./package.json').version;
-const player = require('./player');
-
-const app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-
-app.get('/', function (req, res) {
+app.get('/', function(req, res){
   res.send(200, 'OK')
 });
 
-app.post('/', function (req, res) {
-
-  if (req.body.action == 'bet_request') {
-
+app.post('/', function(req, res){
+  if(req.body.action == 'bet_request') {
+    let gameState;
     try {
-      player.bet_request(JSON.parse(req.body.game_state), function (bet) {
-        winston.info('Bet:', bet);
-        res.send(200, bet.toString());
-      });
-    } catch (error) {
-      console.error(error);
-      winston.error('Catch Error', error);
-      winston.error('Bet:', bet);
-      wisnton.error('Req, res', req.body, res.body);
-      bet(game_state.current_buy_in);
+      gameState = JSON.parse(req.body.game_state);
+      console.log('game state in parse:',gameState);
+    } catch (e) {
+      console.error(500, 'problem with parsing JSON: ' + e.message);
+      gameState = req.body.game_state;
     }
-  } else if (req.body.action == 'showdown') {
+    player.bet_request(gameState, function(bet) {
+      res.send(200, bet.toString());
+    });
+  } else if(req.body.action == 'showdown') {
     player.showdown(JSON.parse(req.body.game_state));
     res.send(200, 'OK');
-  } else if (req.body.action == 'version') {
-    res.send(200, version);
+  } else if(req.body.action == 'version') {
+    res.send(200, player.VERSION);
   } else {
     res.send(200, 'OK')
   }

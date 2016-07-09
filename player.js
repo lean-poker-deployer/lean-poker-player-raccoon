@@ -1,50 +1,55 @@
-var winston = require('winston');
-
-function calculateActivePlayers(game_state) {
-  var count = 0;
-  game_state.players.forEach(function (player) {
-    if (player.status === 'active') {
-      count++;
-    }
-  });
-  return count;
-}
-
-function isPreFlop(game_state) {
-  return game_state.community_cards.length === 0;
-}
-
-function isBetExist(game_state) {
-  if (isPreFlop(game_state)) {
-    return game_state.current_buy_in <= 2 * game_state.small_blind;
-  }
-  return game_state.current_buy_in === 0;
-}
+var handResolver = require('./handResolver');
+var combination = require('./combination'); // Artem created
+var action = require('./action');
 
 module.exports = {
-  bet_request: function (game_state, bet) {
 
-    winston.error('Game State:', game_state);
-    let players = calculateActivePlayers(game_state);
-    let stack = game_state.players[game_state.in_action].stack;
-    let min_save_stack = 0.8 * 1000 * players;
+  VERSION: "Testing JavaScript folding player",
 
-    if (isPreFlop(game_state)) {
-      //Only two playes left
-      if (players === 2) {
-        bet(stack)
+  bet_request: function(gameState, bet) {
+    // console.log(gameState);
+    var pot = gameState.pot;
+    var ourbot = gameState.players[gameState.in_action];
+    // ourbot.hole_cards;
+    var cards = ourbot.hole_cards;
+    console.log('cards:', cards);
+    var card1 = cards[0];
+    var card2 = cards[1];
+    handResolver(cards, function (err, percent) {
+      var result;
+      if (percent < 40) {
+        result = action.fold();
       }
-      //Try steal
-      if (stack >= min_save_stack && !isBetExist(game_state)) {
-        bet(game_state.minimum_raise);
+
+      if ((percent < 80)) {
+        result = action.call(gameState.current_buy_in, ourbot.bet);
       }
-    } else {
-      //Call every bet on postFlop
-      bet(game_state.current_buy_in);
-    }
+
+      else {
+        result = action.raise(gameState.current_buy_in, ourbot.bet, gameState.minimum_raise);
+      }
+
+      bet(result);
+    });
+
+    // part of Artem logic:
+    // FIXME TypeError: Cannot read property 'length' of undefined
+    // at fill (combination.js:174:40)
+    // Artem don't handle strings as numbers.
+    // All incoming cards should be numbers. See test/playerTest.js
+    //
+    // var fillOrdered = combination(cards);
+    // console.log(fillOrdered);
+
+
+    // Function returns 0 if we have small chances to win,
+    // minimum value required to make a call if the chances are average
+    // and minimum value required to make a raise
+    
+
   },
 
-  showdown: function (game_state) {
+  showdown: function(game_state) {
 
   }
 };
