@@ -45,7 +45,7 @@ module.exports = {
     // Function returns 0 if we have small chances to win,
     // minimum value required to make a call if the chances are average
     // and minimum value required to make a raise
-    
+
 
   },
 
