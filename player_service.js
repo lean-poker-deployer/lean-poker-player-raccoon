@@ -8,23 +8,28 @@ const player = require('./player');
 
 const app = express();
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 
-app.get('/', function(req, res){
+app.get('/', function (req, res) {
   res.send(200, 'OK')
 });
 
-app.post('/', function(req, res){
+app.post('/', function (req, res) {
 
-  if(req.body.action == 'bet_request') {
-    player.bet_request(JSON.parse(req.body.game_state),function(bet) {
-      winston.info('Bet:', bet);
-      res.send(200, bet.toString());
-    });
-  } else if(req.body.action == 'showdown') {
+  if (req.body.action == 'bet_request') {
+    try {
+      player.bet_request(JSON.parse(req.body.game_state), function (bet) {
+        winston.info('Bet:', bet);
+        res.send(200, bet.toString());
+      });
+    } catch (error) {
+      console.error(error);
+      bet(game_state.current_buy_in);
+    }
+  } else if (req.body.action == 'showdown') {
     player.showdown(JSON.parse(req.body.game_state));
     res.send(200, 'OK');
-  } else if(req.body.action == 'version') {
+  } else if (req.body.action == 'version') {
     res.send(200, version);
   } else {
     res.send(200, 'OK')
