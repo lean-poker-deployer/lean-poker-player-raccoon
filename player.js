@@ -1,3 +1,5 @@
+var winston = require('winston');
+
 function calculateActivePlayers(game_state) {
   var count = 0;
   game_state.players.forEach(function (player) {
@@ -21,9 +23,11 @@ function isBetExist(game_state) {
 
 module.exports = {
   bet_request: function (game_state, bet) {
-    var players = calculateActivePlayers(game_state);
-    var stack = game_state.players[game_state.in_action].stack;
-    var min_save_stack = 0.8 * 1000 * players;
+
+    winston.info('Game State:', game_state);
+    let players = calculateActivePlayers(game_state);
+    let stack = game_state.players[game_state.in_action].stack;
+    let min_save_stack = 0.8 * 1000 * players;
 
     if (isPreFlop(game_state)) {
       //Only two playes left

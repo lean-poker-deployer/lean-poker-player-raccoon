@@ -1,6 +1,8 @@
 const express = require('express');
 const bodyParser = require("body-parser");
 
+const winston = require('winston');
+
 const version = require('./package.json').version;
 const player = require('./player');
 
@@ -16,6 +18,7 @@ app.post('/', function(req, res){
 
   if(req.body.action == 'bet_request') {
     player.bet_request(JSON.parse(req.body.game_state),function(bet) {
+      winston.info('Bet:', bet);
       res.send(200, bet.toString());
     });
   } else if(req.body.action == 'showdown') {
