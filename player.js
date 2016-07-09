@@ -16,9 +16,9 @@ module.exports = {
       }
     });
 
-    var ourbot = gameState.players[gameState.in_action];
+    var ourbot = game_state.players[game_state.in_action];
     var cardsRang = startHandRanger(ourbot.hole_cards);
-    var stackSize = ourbot.stack/gameState.small_blind;
+    var stackSize = ourbot.stack/game_state.small_blind;
 
     if (foldOrAllIn(players, cardsRang, stackSize) === 'fold') {
       bet(0);
