@@ -5,6 +5,9 @@ module.exports = {
   var pjson = require('./package.json');
   VERSION: pjson.version,
 
+
+/*
+>>>>>>> 9cfe95fc23a635707eb81a723fef54a120f0d5e2
   bet_request: function(gameState, bet) {
     // console.error(gameState);
     var pot = gameState.pot;
@@ -45,6 +48,26 @@ module.exports = {
     // minimum value required to make a call if the chances are average
     // and minimum value required to make a raise
 
+
+  },
+*/
+
+  bet_request: function (game_state, bet) {
+
+    var players = 0;
+    var stack = game_state.players[game_state.in_action].stack;
+
+    game_state.players.forEach(function (player) {
+      if (player.status === 'active') {
+        players++;
+      }
+    });
+
+    if (players === 2) {
+      bet(stack)
+    } else {
+      bet(0);
+    }
 
   },
 
