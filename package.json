@@ -1,7 +1,7 @@
 {
   "name": "poker-player-javascript",
   "description": "Javascript player from lean poker. http://leanpoker.org",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "scripts": {
     "start": "node player_service.js",
     "test": "./node_modules/.bin/mocha",
