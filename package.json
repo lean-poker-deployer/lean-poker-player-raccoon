@@ -5,11 +5,13 @@
   "scripts": {
     "start": "node player_service.js",
     "test": "./node_modules/.bin/mocha",
+    "bump": "./node_modules/.bin/npm-bump minor",
     "eslint": "./node_modules/.bin/eslint --ignore-path .gitignore ."
   },
   "private": true,
   "dependencies": {
     "express": "3.x",
+    "npm-bump": "0.0.18",
     "request": "^2.73.0"
   },
   "devDependencies": {
