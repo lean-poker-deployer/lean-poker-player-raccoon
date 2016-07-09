@@ -9,9 +9,7 @@ var common = require('../common');
 var fs = require('fs');
 var testGameState;
 
-
-
-describe('Bot', function () {
+describe('Common', function () {
 
   before(function (done) {
     fs.readFile(__dirname + '/exampleGameState.json', 'utf8', function (err, data) {
@@ -31,7 +29,7 @@ describe('Bot', function () {
       should(bet).be.Number();
       should(bet).be.aboveOrEqual(0);
       bet.should.be.equal(0); // TODO review this logic. what should answer
-      console.log(testGameState);
+      // console.log(testGameState);
     });
   });
 
