@@ -1,51 +1,30 @@
 var handResolver = require('./handResolver');
 var action = require('./action');
+var startHandRanger = require('./startHand/startHand');
 
 module.exports = {
 
-
   VERSION: "2",
 
-  bet_request: function(gameState, bet) {
-    // console.error(gameState);
-    var pot = gameState.pot;
-    var ourbot = gameState.players[gameState.in_action];
-    // ourbot.hole_cards;
-    var cards = ourbot.hole_cards;
-    console.error('cards:', cards);
-    var card1 = cards[0];
-    var card2 = cards[1];
-    handResolver(cards, function (err, percent) {
-      var result;
-      if (percent < 40) {
-        result = action.fold();
-      }
+  bet_request: function (game_state, bet) {
 
-      if ((percent < 80)) {
-        result = action.call(gameState.current_buy_in, ourbot.bet);
-      }
+    var players = 0;
 
-      else {
-        result = action.raise(gameState.current_buy_in, ourbot.bet, gameState.minimum_raise);
+    game_state.players.forEach(function (player) {
+      if (player.status === 'active') {
+        players++;
       }
-
-      bet(result);
     });
 
-    // part of Artem logic:
-    // FIXME TypeError: Cannot read property 'length' of undefined
-    // at fill (combination.js:174:40)
-    // Artem don't handle strings as numbers.
-    // All incoming cards should be numbers. See test/playerTest.js
-    //
-    // var fillOrdered = combination(cards);
-    // console.error(fillOrdered);
+    var ourbot = gameState.players[gameState.in_action];
+    var cardsRang = startHandRanger(ourbot.hole_cards);
+    var stackSize = ourbot.stack/gameState.small_blind;
 
-
-    // Function returns 0 if we have small chances to win,
-    // minimum value required to make a call if the chances are average
-    // and minimum value required to make a raise
-
+    if (foldOrAllIn(players, cardsRang, stackSize) === 'fold') {
+      bet(0);
+    } else {
+      bet(ourbot.stack);
+    }
 
   },
 
@@ -53,3 +32,19 @@ module.exports = {
 
   }
 };
+
+/*
+ players more - less agressive 2-7
+ cardsRang more - less agressive 1 - 100
+ stackSize less - more agressive
+ */
+function foldOrAllIn(players, cardsRang, stackSize) {
+  if(cardsRang < 0.03) {
+    return 'allin';
+  }
+  if (cardsRang * players  >  stackSize / 10) {
+    return 'allin';
+  }
+
+  return 'fold';
+}
