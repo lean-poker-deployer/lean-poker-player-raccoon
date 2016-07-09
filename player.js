@@ -3,10 +3,11 @@
 var handResolver = require('./handResolver');
 var action = require('./action');
 var startHandRanger = require('./startHand/startHand');
+var pjson = require('./package.json');
 
 module.exports = {
 
-  VERSION: '2.0.0',
+  VERSION: pjson.version,
 
   bet_request: function (game_state, bet) {
 

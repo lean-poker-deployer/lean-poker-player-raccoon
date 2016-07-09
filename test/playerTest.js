@@ -2,6 +2,7 @@
 
 var should = require('should');
 var player = require('../player');
+var pjson = require('../package.json');
 
 var common = require('../common');
 
@@ -34,10 +35,10 @@ describe('Bot', function () {
     });
   });
 
-  it.skip('should do some', function () {
-    if (0 === 0) {
-      throw new Error();
-    }
+  it('version should be from Package.json', function () {
+
+    player.VERSION.should.be.equal(pjson.version);
+    player.VERSION.should.be.String();
 
   });
 
