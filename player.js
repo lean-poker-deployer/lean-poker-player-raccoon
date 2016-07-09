@@ -1,6 +1,5 @@
 'use strict';
 
-var handResolver = require('./handResolver');
 var action = require('./action');
 var startHandRanger = require('./startHand/startHand');
 
