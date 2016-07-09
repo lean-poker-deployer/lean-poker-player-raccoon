@@ -28,7 +28,6 @@ describe('Common', function () {
     player.bet_request(testGameState, function (bet) {
       should(bet).be.Number();
       should(bet).be.aboveOrEqual(0);
-      bet.should.be.equal(0); // TODO review this logic. what should answer
       // console.log(testGameState);
     });
   });

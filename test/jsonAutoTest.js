@@ -25,6 +25,7 @@ function readFiles(dirname, onFileContent, onError) {
   });
 }
 
+var count = 0;
 
 readFiles(path.resolve(__dirname, 'fixters/') + '/', function onFileContent(filename, content) {
   var resultJson;
@@ -42,6 +43,8 @@ readFiles(path.resolve(__dirname, 'fixters/') + '/', function onFileContent(file
     }
     it(resultJson.description, function () {
       player.bet_request(resultJson.game_state, function (bet) {
+        console.log('expected and bet: ',resultJson.expected, bet);
+        console.log(count++);
         bet.should.be.equal(resultJson.expected);
       });
 
