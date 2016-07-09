@@ -1,6 +1,8 @@
 var startHandRanger = require('./startHand/startHand');
 var pjson = require('./package.json');
 
+var CONST_AGRESSION_LEVEL = 0.125;
+
 module.exports = {
 
   VERSION: pjson.version,
@@ -50,7 +52,7 @@ function foldOrAllIn(players, hand_rang, our_stact, max_opponent_stack, small_bl
   if (hand_rang < 0.02) {
     return 'allin';
   }
-  if(stack_multi > 1 && hand_rang < 0.07 * stack_multi) {
+  if(stack_multi > 1 && hand_rang < CONST_AGRESSION_LEVEL * stack_multi) {
     return 'allin';
   }
   if (players.in_tournament === 2) {
