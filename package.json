@@ -1,9 +1,20 @@
 {
-    "name": "poker-player-javascript",
+    "name": "raccoon",
     "description": "Javascript player from lean poker. http://leanpoker.org",
-    "version": "0.0.1",
+    "version": "0.0.0",
     "private": true,
     "dependencies": {
-        "express": "3.x"
-    }
+        "body-parser": "^1.15.2",
+        "express": "^4.14.0"
+    },
+    "devDependencies": {
+        "mocha": "^2.3.3",
+        "supertest": "^0.13.0",
+        "should": "^9.0.2"
+    },
+    "scripts": {
+        "start": "node player_service.js",
+        "test": "mocha"
+    },
+    "author": "Raccoon team"
 }

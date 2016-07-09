@@ -1,1 +1,1 @@
-web: node player_service.js
+web: npm start
