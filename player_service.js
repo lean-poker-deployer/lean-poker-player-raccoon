@@ -1,6 +1,7 @@
 var player = require('./player');
 var express = require('express');
 var app = express();
+var version = require('./package.json').version;
 
 app.use(express.json());
 app.use(express.urlencoded());
@@ -26,7 +27,7 @@ app.post('/', function(req, res){
     player.showdown(JSON.parse(req.body.game_state));
     res.send(200, 'OK');
   } else if(req.body.action == 'version') {
-    res.send(200, player.VERSION);
+    res.send(200, version);
   } else {
     res.send(200, 'OK')
   }
