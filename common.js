@@ -1,14 +1,27 @@
-module.exports = {
+'use strict';
 
-  callAmount: function (current_buy_in, current_bet_of_player) {
-    if (current_buy_in === current_bet_of_player) {
-      return 0;
-    }
-    if (current_buy_in > current_bet_of_player) {
-      return current_buy_in - current_bet_of_player;
-    } else {
-      throw new Error('current_buy_in cannot be less then current bet');
+function activePlayers(players) {
+  var count = 0, i;
+  for (i = 0; i < players.length; i++) {
+    if (players[i]['status'] == 'active') {
+      count++;
     }
   }
+  return count;
+}
 
+function averageActivePlayersStack(players) {
+  var sum = 0, result = 0, i;
+  for (i = 0; i < players.length; i++) {
+    if (players[i]['status'] == 'active') {
+      sum = sum + players[i].stack;
+    }
+  }
+  return sum / activePlayers(players);
+}
+
+module.exports = {
+  activePlayers : activePlayers,
+  averageActivePlayersStack : averageActivePlayersStack
 };
+

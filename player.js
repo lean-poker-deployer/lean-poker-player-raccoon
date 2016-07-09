@@ -1,8 +1,14 @@
+<<<<<<< HEAD
+=======
+'use strict';
+
+var action = require('./action');
+>>>>>>> b21e8815594063a09f17a362e62a15549e8a97e9
 var startHandRanger = require('./startHand/startHand');
 
 module.exports = {
 
-  VERSION: "2",
+  VERSION: '2.0.0',
 
   bet_request: function (game_state, bet) {
 
